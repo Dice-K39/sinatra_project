@@ -7,6 +7,12 @@
 
         <%= yield %>
 
+        <% flash.keys.each do |type| %>
+          <div class="text-center alert alert-warning">
+            <%= flash[type] %>
+          </div>
+        <% end %>
+
     </div>
   </body>
 </html>
