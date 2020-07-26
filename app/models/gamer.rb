@@ -3,4 +3,5 @@ class Gamer < ActiveRecord::Base
     has_many :video_games
 
     validates :username, presence: true, uniqueness: true
+    validates :email, presence: true, uniqueness: true
 end
