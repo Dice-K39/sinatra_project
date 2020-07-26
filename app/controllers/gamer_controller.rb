@@ -7,16 +7,16 @@ class GamerController < ApplicationController
         end
     end
 
-    post '/signup' do
-        pw_confirmation = params[:confirm_password]
-        
-        params.delete(:confirm_password)
-
-        gamer = Gamer.new(params)
-        
+    post '/signup' do        
         if is_logged_in?
             redirect to '/show_games'
         else
+            pw_confirmation = params[:confirm_password]
+        
+            params.delete(:confirm_password)
+    
+            gamer = Gamer.new(params)
+            
             if Gamer.find_by(:username => gamer[:username])
                 flash[:username_taken] = "The username is already in use. Please enter a new username or log in to continue."
 
@@ -26,7 +26,7 @@ class GamerController < ApplicationController
                     gamer.save
 
                     session[:gamer_id] = gamer.id
-                    binding.pry
+                   
                     erb :'video_games/show_games'
                 else
                     flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
