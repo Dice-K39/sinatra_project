@@ -14,4 +14,13 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  helpers do
+    def is_logged_in?
+      !!current_gamer
+    end
+
+    def current_gamer
+      @current_gamer ||= Gamer.find_by(id: session[:gamer_id]) if session[:gamer_id]
+    end
+  end
 end
