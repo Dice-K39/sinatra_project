@@ -1,7 +1,7 @@
 class GamerController < ApplicationController
     get '/signup' do
         if is_logged_in?
-            redirect to '/show_games'
+            erb :'/video_games/index'
         else
             erb :'gamers/signup'
         end
@@ -9,7 +9,7 @@ class GamerController < ApplicationController
 
     post '/signup' do        
         if is_logged_in?
-            redirect to '/show_games'
+            erb :'/video_games/index'
         else
             pw_confirmation = params[:confirm_password]
         
@@ -17,6 +17,7 @@ class GamerController < ApplicationController
     
             gamer = Gamer.new(params)
 
+            # Does not follow RFC 5322. Not able to validate internationalized emails or TLD emails.
             EMAIL = /(?=\A.{6,255}\z)\A([a-z0-9]+[\w|\-|\.|\+]*)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,63})/i
 
             if !params[:email].match(EMAIL)
@@ -30,10 +31,12 @@ class GamerController < ApplicationController
             else
                 if params[:password] == pw_confirmation
                     gamer.save
-
+                    
                     session[:gamer_id] = gamer.id
+
+                    @gamer = current_user
                    
-                    erb :'video_games/show_games'
+                    erb :'video_games/index'
                 else
                     flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
                     
@@ -45,24 +48,30 @@ class GamerController < ApplicationController
 
     get '/login' do
         if is_logged_in?
-            redirect to '/show_games'
+            erb :'/video_games/index'
         else
             erb :'gamers/login'
         end
     end
 
     post '/login' do
-        current_gamer = Gamer.find_by(:username => params[:username])
+        gamer = Gamer.find_by(:username => params[:username])
 
-        if current_gamer && current_gamer.authenticate(params[:password])
-            session[:gamer_id] = current_gamer.id
+        if gamer && gamer.authenticate(params[:password])
+            session[:gamer_id] = gamer.id
 
-            redirect to '/show_games'
+            @gamer = gamer
+
+            erb :'/video_games/index'
         else
-            if current_gamer
+            if gamer
                 flash[:password] = "Entered the wrong password. Please try again."
+
+                redirect to '/login'
             else
-                flash[:no_account] = "No account associated with username. Please create an account."
+                flash[:no_account] = "No account associated with username and email combination. Please create an account."
+
+                redirect to '/signup'
             end
         end
     end
