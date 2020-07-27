@@ -1,7 +1,7 @@
 class GamerController < ApplicationController
     get '/signup' do
         if is_logged_in?
-            erb :'/video_games/index'
+            redirect to '/video_games/index'
         else
             erb :'gamers/signup'
         end
@@ -9,7 +9,7 @@ class GamerController < ApplicationController
 
     post '/signup' do        
         if is_logged_in?
-            erb :'/video_games/index'
+            redirect to '/video_games/index'
         else
             pw_confirmation = params[:confirm_password]
         
@@ -34,7 +34,7 @@ class GamerController < ApplicationController
                     
                     session[:gamer_id] = gamer.id
 
-                    @gamer = current_user
+                    @gamer = current_gamer
                    
                     erb :'video_games/index'
                 else
@@ -48,7 +48,7 @@ class GamerController < ApplicationController
 
     get '/login' do
         if is_logged_in?
-            erb :'/video_games/index'
+            redirect to '/video_games/index'
         else
             erb :'gamers/login'
         end
@@ -74,5 +74,11 @@ class GamerController < ApplicationController
                 redirect to '/signup'
             end
         end
+    end
+
+    get '/logout' do
+        session.clear
+
+        redirect to '/login'
     end
 end

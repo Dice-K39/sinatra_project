@@ -1,0 +1,11 @@
+<h2>Welcome to your list, <%= @gamer.username %>.</h2>
+<br>
+<% if @gamer.video_games.empty? %>
+    <%= "You do not have any games on your list. "%><a href='/new'>Add a game!</a>
+<% else %>
+    <% @gamer.video_games.each do |games| %>
+        <a href='/video_games/<%= games.id %>'><%= games.title %></a>
+    <% end %>
+<% end %>
+<br><br>
+<a href='/logout'>Logout</a>
