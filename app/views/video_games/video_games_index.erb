@@ -1,5 +1,8 @@
 <h2>Welcome to your list, <%= @gamer.username %>.</h2>
-<br>
+<a href='/delete_account'>
+    <button>Delete Account</button>
+</a>
+<br><br><br>
 <% if @gamer.video_games.empty? %>
     <%= "You do not have any games on your list. "%><a href='/new'>Add a game!</a>
 <% else %>
@@ -7,5 +10,5 @@
         <a href='/video_games/<%= games.id %>'><%= games.title %></a>
     <% end %>
 <% end %>
-<br><br>
+<br><br><br>
 <a href='/logout'>Logout</a>

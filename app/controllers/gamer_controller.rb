@@ -1,7 +1,7 @@
 class GamerController < ApplicationController
     get '/signup' do
         if is_logged_in?
-            redirect to '/gamer_home'
+            redirect to '/video_games_index'
         else
             erb :'gamers/signup'
         end
@@ -9,7 +9,7 @@ class GamerController < ApplicationController
 
     post '/signup' do        
         if is_logged_in?
-            redirect to '/gamer_home'
+            redirect to '/video_games_index'
         else
             pw_confirmation = params[:confirm_password]
         
@@ -36,7 +36,7 @@ class GamerController < ApplicationController
 
                     @gamer = current_gamer
                    
-                    redirect to '/gamer_home'
+                    redirect to '/video_games_index'
                 else
                     flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
                     
@@ -48,7 +48,7 @@ class GamerController < ApplicationController
 
     get '/login' do
         if is_logged_in?
-            redirect to '/gamer_home'
+            redirect to '/video_games_index'
         else
             erb :'gamers/login'
         end
@@ -62,7 +62,7 @@ class GamerController < ApplicationController
 
             @gamer = gamer
 
-            redirect to '/gamer_home'
+            redirect to '/video_games_index'
         else
             if gamer
                 flash[:password] = "Entered the wrong password. Please try again."
