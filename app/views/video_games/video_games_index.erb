@@ -1,6 +1,7 @@
 <h2>Welcome to your list, <%= @gamer.username %>.</h2>
-<form action='/delete_account'>
-    <button onclick="return confirm('Are you sure you want to delete this account?');">Delete</button>
+<form method='post' action='/gamer/<%= @gamer.id %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <button onclick="return confirm('Are you sure you want to delete your account?');">Delete Account</button>
 </form>
 <br><br>
 <% if @gamer.video_games.empty? %>
@@ -19,8 +20,14 @@
             <td><%= game.developer %></td>
             <td><%= game.date_purchased %></td>
             <td><%= game.description %></td>
-        <% end %>
+            <td>
+                <form method='post' action='/video_games/<%= game.id %>'>
+                    <input type='hidden' name='_method' value='delete'>
+                    <button onclick="return confirm('Are you sure you want to delete this listing?');">Delete Listing</button>
+                </form>
+            </td>
         </tr>
+        <% end %>
     </table>
     <form action='/new'>
         <button onclick="return confirm('Creating a new entry. Proceed?')">Add a Game</button>

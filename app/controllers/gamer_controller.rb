@@ -81,4 +81,15 @@ class GamerController < ApplicationController
 
         redirect to '/login'
     end
+
+    delete '/gamer/:id' do
+        gamer = Gamer.find_by_id(params[:id])
+
+        gamer.destroy
+        gamer.video_games.destroy_all
+
+        session.clear
+
+        redirect to '/'
+    end
 end

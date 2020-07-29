@@ -19,14 +19,9 @@ class VideoGameController < ApplicationController
         end
     end
 
-    get '/delete_account' do
-        gamer = Gamer.find_by_id(session[:gamer_id])
-
-        session.clear
-
-        gamer.destroy
-        gamer.video_games.destroy_all
-
-        redirect to '/'
+    delete '/video_games/:id' do
+        VideoGame.delete(params[:id])
+        
+        redirect to '/video_games_index'
     end
 end
