@@ -3,6 +3,6 @@ class VideoGame < ActiveRecord::Base
 
     validates :title, presence: true
     validates :developer, presence: true
-    validates :release_date, presence: true
+    validates :date_purchased, presence: true
     validates :description, presence: true
 end

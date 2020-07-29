@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200727222916) do
+ActiveRecord::Schema.define(version: 20200729031404) do
 
   create_table "gamers", force: :cascade do |t|
     t.string "username"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20200727222916) do
   create_table "video_games", force: :cascade do |t|
     t.string  "title"
     t.string  "developer"
-    t.date    "release_date"
+    t.date    "date_purchased"
     t.string  "description"
     t.integer "gamer_id"
   end
