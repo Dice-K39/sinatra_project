@@ -20,10 +20,9 @@ class VideoGameController < ApplicationController
     end
 
     get '/video_games/:id' do
-        gamer = current_gamer
-        video_game = VideoGame.find_by_id(params[:id])
+        @video_game = VideoGame.find_by_id(params[:id])
 
-
+        erb :'/video_games/show'
     end
 
     delete '/video_games/:id' do

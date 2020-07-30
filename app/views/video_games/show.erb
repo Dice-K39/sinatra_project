@@ -1,0 +1,13 @@
+<p>
+    <label>Title: </label><%= @video_game.title %>
+    <label>Developer: </label><%= @video_game.developer %>
+    <label>Date Purchased: </label><%= @video_game.date_purchased%>
+    <label>Description: </label><%= @video_game.description%>
+    <br><br>
+    <a href='/video_games/<%= video_game.id %>/edit'>Edit Listing</a>
+    <br><br>
+    <form method='post' action='/video_games/<%= game.id %>'>
+        <input type='hidden' name='_method' value='delete'>
+        <button onclick="return confirm('Are you sure you want to delete this listing?');">Delete Listing</button>
+    </form>
+</p>
