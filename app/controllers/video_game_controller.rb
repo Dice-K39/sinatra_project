@@ -22,12 +22,28 @@ class VideoGameController < ApplicationController
     get '/video_games/:id' do
         @video_game = VideoGame.find_by_id(params[:id])
 
-        erb :'/video_games/show'
+        erb :'video_games/show'
+    end
+
+    get '/video_games/:id/edit' do
+        @video_game = VideoGame.find_by_id(params[:id])
+
+        erb :'video_games/edit'
+    end
+
+    patch '/video_games/:id' do
+        video_game = VideoGame.find_by_id(params[:id])
+
+        params.delete(:_method)
+
+        video_game.update(params)
+
+        redirect to '/video_games'
     end
 
     delete '/video_games/:id' do
         VideoGame.delete(params[:id])
         
-        redirect to '/video_games_index'
+        redirect to '/video_games'
     end
 end

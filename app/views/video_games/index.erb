@@ -1,7 +1,7 @@
 <h2>Welcome to your list, <%= @gamer.username %>.</h2>
 <br><br>
 <% if @gamer.video_games.empty? %>
-    <%= "You do not have any games on your list. "%><a href='/new'>Add a Game!</a>
+    <%= "You do not have any games on your list. "%><a href='/video_games/new'>Add a Game!</a>
 <% else %>
     <table width='50%' style="text-align:left">
         <tr>
