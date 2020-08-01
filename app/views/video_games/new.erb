@@ -1,17 +1,24 @@
 <h2>Enter games that you own or want to own:</h2>
 <br>
 <form method='post' action='/video_games'>
-    <label>Title: </label>
-    <input type='text' placeholder='Enter Title' name='title'>
-    <br>
-    <label>Developer: </label>
-    <input type ='text' placeholder='Enter Developer' name='developer'>
-    <br>
-    <label>Date Purchased: </label>
-    <input type='date' placeholder='Enter Date Purchased' name='date_purchased'>
-    <br>
-    <label>Description: </label>
-    <textarea name='description'></textarea>
+    <table>
+        <tr>
+            <td>Title: </td>
+            <td><input type='text' placeholder='Enter Title' name='title' required></td>
+        </tr>
+        <tr>
+            <td>Developer: </td>
+            <td><input type ='text' placeholder='Enter Developer' name='developer' required></td>
+        </tr>
+        <tr>
+            <td>Date Purchased: </td>
+            <td><input type='date' placeholder='Enter Date Purchased' name='date_purchased'></td>
+        </tr>
+        <tr>
+            <td>Description: </td>
+            <td><textarea name='description'></textarea></td>
+        </tr>
+    </table>
     <br><br>
     <input type='submit' value='Create Listing'>
     <input type='reset'>

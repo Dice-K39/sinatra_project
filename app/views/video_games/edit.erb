@@ -3,17 +3,24 @@
 <p>
     <form method='post' action='/video_games/<%= @video_game.id %>'>
         <input type='hidden' name='_method' value='patch'>
-        <label>Title: </label>
-        <input type='text' name='title' value='<%= @video_game.title %>'>
-        <br>
-        <label>Developer: </label>
-        <input type ='text' name='developer' value='<%= @video_game.developer %>'>
-        <br>
-        <label>Date Purchased: </label>
-        <input type='date' name='date_purchased' value='<%= @video_game.date_purchased %>'>
-        <br>
-        <label>Description: </label>
-        <textarea name='description'><%= @video_game.description %></textarea>
+        <table>
+            <tr>
+                <td>Title: </td>
+                <td><input type='text' name='title' value='<%= @video_game.title %>'></td>
+            </tr>
+            <tr>
+                <td>Developer: </td>
+                <td><input type ='text' name='developer' value='<%= @video_game.developer %>'></td>
+            </tr>
+            <tr>
+                <td>Date Purchased: </td>
+                <td><input type='date' name='date_purchased' value='<%= @video_game.date_purchased %>'></td>
+            </tr>
+            <tr>
+                <td>Description: </td>
+                <td><textarea name='description'><%= @video_game.description %></textarea></td>
+            </tr>
+        </table>
         <br><br>
         <input type='submit' value='Edit Listing'>
     </form>

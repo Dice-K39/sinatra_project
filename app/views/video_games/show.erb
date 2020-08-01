@@ -1,14 +1,19 @@
-<h1>Listing for:</h1>
-<br>
+<h1>Listing for: <%= @video_game.title %></h1>
 <p>
-    <label>Title: </label><%= @video_game.title %>
-    <br>
-    <label>Developer: </label><%= @video_game.developer %>
-    <br>
-    <label>Date Purchased: </label><%= @video_game.date_purchased%>
-    <br>
-    <label>Description: </label><%= @video_game.description%>
+    <table>
+        <tr>
+            <td>Developer: </td>
+            <td><%= @video_game.developer %></td>
+        </tr>
+        <tr>
+            <td>Date Purchased: </td>
+            <td><%= @video_game.date_purchased%></td>
+        </tr>
+        <tr>
+            <td>Description: </td>
+            <td><%= @video_game.description%></td>
+        </tr>
+    </table>
     <br><br>
     <a href='/video_games/<%= @video_game.id %>/edit'>Edit Listing</a>
-    <br><br>
 </p>
