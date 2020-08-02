@@ -22,5 +22,17 @@ class ApplicationController < Sinatra::Base
     def current_gamer
       @current_gamer ||= Gamer.find_by(id: session[:gamer_id]) if session[:gamer_id]
     end
+
+    def if_logged_in_redirect_to_video_games
+      if is_logged_in?
+        redirect to '/video_games'
+      end
+    end
+
+    def if_not_logged_in_redirect_to_login
+      if !is_logged_in?
+        redirect to '/login'
+      end
+    end
   end
 end

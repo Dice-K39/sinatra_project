@@ -1,57 +1,51 @@
 class GamerController < ApplicationController
     get '/signup' do
-        if is_logged_in?
-            redirect to '/video_games'
-        else
-            erb :'gamers/signup'
-        end
+        if_logged_in_redirect_to_video_games
+
+        erb :'gamers/signup'
     end
 
     post '/signup' do        
-        if is_logged_in?
-            redirect to '/video_games'
-        else
-            pw_confirmation = params[:confirm_password]
+        if_logged_in_redirect_to_video_games
         
-            params.delete(:confirm_password)
+        pw_confirmation = params[:confirm_password]
     
-            gamer = Gamer.new(params)
+        params.delete(:confirm_password)
 
-            # Does not follow RFC 5322. Not able to validate internationalized emails or TLD emails.
-            EMAIL = /(?=\A.{6,255}\z)\A([a-z0-9]+[\w|\-|\.|\+]*)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,63})/i
+        gamer = Gamer.new(params)
 
-            if !params[:email].match(EMAIL)
-                flash[:invalid_email] = "Email is invalid. Please re-enter your email."
+        # Does not follow RFC 5322. Not able to validate internationalized emails or TLD emails.
+        EMAIL = /(?=\A.{6,255}\z)\A([a-z0-9]+[\w|\-|\.|\+]*)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,63})/i
 
-                redirect to '/signup'
-            elsif Gamer.find_by(:username => gamer[:username]) && Gamer.find_by(:email => gamer[:email])
-                flash[:username_taken] = "The username and email combination is already in use. Please enter a new combination or login to continue."
+        if !params[:email].match(EMAIL)
+            flash[:invalid_email] = "Email is invalid. Please re-enter your email."
 
-                redirect to '/signup'
+            redirect to '/signup'
+        elsif Gamer.find_by(:username => gamer[:username]) && Gamer.find_by(:email => gamer[:email])
+            flash[:username_taken] = "The username and email combination is already in use. Please enter a new combination or login to continue."
+
+            redirect to '/signup'
+        else
+            if params[:password] == pw_confirmation
+                gamer.save
+                
+                session[:gamer_id] = gamer.id
+
+                @gamer = current_gamer
+                
+                redirect to '/video_games'
             else
-                if params[:password] == pw_confirmation
-                    gamer.save
-                    
-                    session[:gamer_id] = gamer.id
-
-                    @gamer = current_gamer
-                   
-                    redirect to '/video_games'
-                else
-                    flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
-                    
-                    redirect to '/signup'
-                end
+                flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
+                
+                redirect to '/signup'
             end
         end
     end
 
     get '/login' do
-        if is_logged_in?
-            redirect to '/video_games'
-        else
-            erb :'gamers/login'
-        end
+        if_logged_in_redirect_to_video_games
+
+        erb :'gamers/login'
     end
 
     post '/login' do
