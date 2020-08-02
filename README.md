@@ -33,4 +33,4 @@ Bug reports and pull requests are welcomed on [GitHub](https://github.com/Dice-K
 
 ## License
 
-This project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT). A [copy of the license](/LICENSE) is with cloned with this project.
+This project is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT). A [copy of the license](/LICENSE) is cloned with this project.
