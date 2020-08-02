@@ -20,13 +20,33 @@ class VideoGameController < ApplicationController
     post '/video_games' do
         if !is_logged_in?
             redirect to '/login'
-        else        
-            @video_game = current_gamer.video_games.create(params)
-            
-            if @video_game.save
-                redirect to '/video_games'
-            else
+        else
+            gamer = Gamer.find_by_id(session[:gamer_id])
+
+            if gamer.video_games.find_by(:title => params[:title])
+                binding.pry
+                flash[:already_owned] = "You already own this game."
+
                 redirect to '/video_games/new'
+            else
+                date_today = Date.today
+                before_this_date = Date.new(1980,1,1)
+
+                if params[:date_purchased] <= date_today.to_s && params[:date_purchased] >= before_this_date.to_s
+                    @video_game = current_gamer.video_games.create(params)
+                    
+                    if @video_game.save
+                        redirect to '/video_games'
+                    else
+                        flash[:not_saved] = "Error occured. Entry not saved."
+
+                        redirect to '/video_games/new'
+                    end
+                else
+                    flash[:date_not_possible] = "Date purchased not likely. Please enter today or date prior to today."
+
+                    redirect to '/video_games/new'
+                end
             end
         end
     end

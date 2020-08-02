@@ -65,7 +65,7 @@ class GamerController < ApplicationController
             redirect to '/video_games'
         else
             if gamer
-                flash[:password] = "Entered the wrong password. Please try again."
+                flash[:password] = "Entered incorrect password. Please try again."
 
                 redirect to '/login'
             else
