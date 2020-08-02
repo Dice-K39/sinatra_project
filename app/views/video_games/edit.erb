@@ -6,19 +6,19 @@
         <table>
             <tr>
                 <td>Title: </td>
-                <td><input type='text' name='title' value='<%= @video_game.title %>'></td>
+                <td><input type='text' name='title' value="<%= @video_game.title %>" required></td>
             </tr>
             <tr>
                 <td>Developer: </td>
-                <td><input type ='text' name='developer' value='<%= @video_game.developer %>'></td>
+                <td><input type ='text' name='developer' value="<%= @video_game.developer %>" required></td>
             </tr>
             <tr>
                 <td>Date Purchased: </td>
-                <td><input type='date' name='date_purchased' value='<%= @video_game.date_purchased %>'></td>
+                <td><input type='date' name='date_purchased' value="<%= @video_game.date_purchased %>" required></td>
             </tr>
             <tr>
                 <td>Description: </td>
-                <td><textarea name='description'><%= @video_game.description %></textarea></td>
+                <td><textarea name='description' required><%= @video_game.description %></textarea></td>
             </tr>
         </table>
         <br><br>
