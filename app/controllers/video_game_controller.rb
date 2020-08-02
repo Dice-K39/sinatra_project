@@ -19,7 +19,6 @@ class VideoGameController < ApplicationController
         gamer = Gamer.find_by_id(session[:gamer_id])
 
         if gamer.video_games.find_by(:title => params[:title])
-            binding.pry
             flash[:already_owned] = "You already own this game."
 
             redirect to '/video_games/new'
@@ -63,7 +62,6 @@ class VideoGameController < ApplicationController
 
     patch '/video_games/:id' do
         if_not_logged_in_redirect_to_login
-
 
         video_game = VideoGame.find_by_id(params[:id])
 
