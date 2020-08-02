@@ -7,10 +7,6 @@ class GamerController < ApplicationController
 
     post '/signup' do        
         if_logged_in_redirect_to_video_games
-        
-        pw_confirmation = params[:confirm_password]
-    
-        params.delete(:confirm_password)
 
         gamer = Gamer.new(params)
 
@@ -26,7 +22,11 @@ class GamerController < ApplicationController
 
             redirect to '/signup'
         else
-            if params[:password] == pw_confirmation
+            if params[:password] != params[:password_confirmation]
+                flash[:password_not_the_same] = "Password and password confirmation not the same. Please check your entry."
+
+                redirect to '/signup'
+            else
                 if params[:password].split("").count < 5
                     
                     flash[:password_short] = "Password is too short. Re-enter a longer password."
@@ -41,10 +41,6 @@ class GamerController < ApplicationController
                     
                     redirect to '/video_games'
                 end
-            else
-                flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
-                
-                redirect to '/signup'
             end
         end
     end
