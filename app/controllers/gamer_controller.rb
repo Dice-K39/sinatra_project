@@ -27,13 +27,20 @@ class GamerController < ApplicationController
             redirect to '/signup'
         else
             if params[:password] == pw_confirmation
-                gamer.save
-                
-                session[:gamer_id] = gamer.id
+                if params[:password].split("").count < 5
+                    
+                    flash[:password_short] = "Password is too short. Re-enter a longer password."
 
-                @gamer = current_gamer
-                
-                redirect to '/video_games'
+                    redirect to '/signup'
+                else
+                    gamer.save
+                    
+                    session[:gamer_id] = gamer.id
+
+                    @gamer = current_gamer
+                    
+                    redirect to '/video_games'
+                end
             else
                 flash[:non_matching_password] = "The password you have entered does not match. Please re-enter your password."
                 
@@ -51,21 +58,28 @@ class GamerController < ApplicationController
     post '/login' do
         gamer = Gamer.find_by(:username => params[:username], :email => params[:email])
 
-        if gamer && gamer.authenticate(params[:password])
-            session[:gamer_id] = gamer.id
+        if params[:password].split("").count < 5
+                    
+            flash[:password_short] = "Password is too short. Re-enter your password."
 
-            @gamer = gamer
-
-            redirect to '/video_games'
+            redirect to '/login'
         else
-            if gamer
-                flash[:password] = "Entered incorrect password. Please try again."
+            if gamer && gamer.authenticate(params[:password])
+                session[:gamer_id] = gamer.id
 
-                redirect to '/login'
+                @gamer = gamer
+
+                redirect to '/video_games'
             else
-                flash[:no_account] = "No account associated with username and email combination. Please create an account."
+                if gamer
+                    flash[:password] = "Entered incorrect password. Please try again."
 
-                redirect to '/signup'
+                    redirect to '/login'
+                else
+                    flash[:no_account] = "No account associated with username and email combination. Please create an account."
+
+                    redirect to '/signup'
+                end
             end
         end
     end

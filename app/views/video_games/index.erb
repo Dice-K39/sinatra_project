@@ -15,7 +15,7 @@
 <a href='/logout' class="button" onclick="return confirm('Want to logout?')">Logout</a>
 <br><br>
 <% if @gamer.video_games.empty? %>
-    <%= "You do not have any games on your list. "%><a href='/video_games/new'>Add a Game!</a>
+    <%= "You do not have any games on your list. "%><a href='/video_games/new' class="button">Add a Game!</a>
 <% else %>
     <table width=100% style='text-align: left'>
         <tr>
