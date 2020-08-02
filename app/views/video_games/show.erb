@@ -1,7 +1,7 @@
-<a href='/video_games'>Back to Index</a>
+<a href='/video_games' class="button">Back to Index</a>
 <h1>Listing for: <%= @video_game.title %></h1>
 <p>
-    <table>
+    <table style='text-align: left'>
         <tr>
             <td>Developer: </td>
             <td><%= @video_game.developer %></td>
@@ -16,5 +16,5 @@
         </tr>
     </table>
     <br><br>
-    <a href='/video_games/<%= @video_game.id %>/edit'>Edit Listing</a>
+    <a href='/video_games/<%= @video_game.id %>/edit' class="button">Edit Listing</a>
 </p>

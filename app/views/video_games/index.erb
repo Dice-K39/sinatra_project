@@ -1,20 +1,23 @@
 <style>
-    table, th, td {
-        border: 1px solid black;
+    table, th, td 
+    {
+        border: 2px solid black;
     }
-    th, td {
+    
+    th, td 
+    {
         padding: 5px;
         text-align: left;
-}   
-
+    }   
 </style>
 
-<h2>Welcome to your list, <%= @gamer.username %>.</h2><a href='/logout' onclick="return confirm('Want to logout?')">Logout</a>
+<h2>Welcome to your list, <%= @gamer.username %>.</h2>
+<a href='/logout' class="button" onclick="return confirm('Want to logout?')">Logout</a>
 <br><br>
 <% if @gamer.video_games.empty? %>
     <%= "You do not have any games on your list. "%><a href='/video_games/new'>Add a Game!</a>
 <% else %>
-    <table width='75%'>
+    <table width=100% style='text-align: left'>
         <tr>
             <th>Game Title</th>
             <th>Developer</th>
@@ -24,7 +27,7 @@
         </tr>
         <% @gamer.video_games.each do |game| %>
         <tr>
-            <td><a href='/video_games/<%= game.id %>'><%= game.title %></a></td>
+            <td><a href='/video_games/<%= game.id %>' class="button"><%= game.title %></a></td>
             <td><%= game.developer %></td>
             <td><%= game.date_purchased %></td>
             <td><%= game.description %></td>
@@ -38,5 +41,5 @@
         <% end %>
     </table>
     <br>
-    <a href='/video_games/new' onclick="return confirm('Want to create a new entry??')">Add a Game</a>
+    <a href='/video_games/new' class="button" onclick="return confirm('Want to create a new entry??')">Add a Game</a>
 <% end %>

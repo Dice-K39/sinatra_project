@@ -2,18 +2,50 @@
   <head>
   </head>
     <title>Sinatra Project</title>
+    <style>
+      .container 
+      {
+        position: relative;
+        text-align: center;
+        color: white;
+      }
+
+      /* Centered text */
+      .centered 
+      {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      img 
+      {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .button 
+      {
+        background-color: white;
+        color: black;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
-
-        <%= yield %>
-        <br><br>
-        <% flash.keys.each do |type| %>
-          <div class="text-center alert alert-warning">
+      <div class='container'>
+        <img src="/images/game_background.jpg">
+        <div class='centered'>
+          <%= yield %>
+          <br><br>
+          <% flash.keys.each do |type| %>
+            <div class="text-center alert alert-warning">
             <%= flash[type] %>
-          </div>
-        <% end %>
-
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </body>
 </html>
