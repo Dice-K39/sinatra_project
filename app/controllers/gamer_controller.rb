@@ -10,15 +10,15 @@ class GamerController < ApplicationController
 
         gamer = Gamer.new(params)
 
-        # Does not follow RFC 5322. Not able to validate internationalized emails or TLD emails.
-        EMAIL = /(?=\A.{6,255}\z)\A([a-z0-9]+[\w|\-|\.|\+]*)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,63})/i
+        # # Does not follow RFC 5322. Not able to validate internationalized emails or TLD emails.
+        # EMAIL = /(?=\A.{6,255}\z)\A([a-z0-9]+[\w|\-|\.|\+]*)@([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,63})/i
 
-        if !params[:email].match(EMAIL)
-            flash[:invalid_email] = "Email is invalid. Please re-enter your email."
+        # if !params[:email].match(EMAIL)
+        #     flash[:invalid_email] = "Email is invalid. Please re-enter your email."
 
-            redirect to '/signup'
-        elsif Gamer.find_by(:username => gamer[:username]) && Gamer.find_by(:email => gamer[:email])
-            flash[:username_taken] = "The username and email combination is already in use. Please enter a new combination or login to continue."
+        #     redirect to '/signup'
+        if Gamer.find_by(:username => gamer[:username])# elsif Gamer.find_by(:username => gamer[:username]) && Gamer.find_by(:email => gamer[:email])
+            flash[:username_taken] = "The username is in use. Please try again."
 
             redirect to '/signup'
         else
@@ -29,7 +29,7 @@ class GamerController < ApplicationController
             else
                 if params[:password].split("").count < 5
                     
-                    flash[:password_short] = "Password is too short. Re-enter a longer password."
+                    flash[:password_short] = "Password not valid. Re-enter password."
 
                     redirect to '/signup'
                 else
@@ -37,7 +37,7 @@ class GamerController < ApplicationController
                     
                     session[:gamer_id] = gamer.id
 
-                    @gamer = current_gamer
+                    #@gamer = current_gamer
                     
                     redirect to '/video_games'
                 end
@@ -52,18 +52,18 @@ class GamerController < ApplicationController
     end
 
     post '/login' do
-        gamer = Gamer.find_by(:username => params[:username], :email => params[:email])
+        gamer = Gamer.find_by(:username => params[:username])#gamer = Gamer.find_by(:username => params[:username], :email => params[:email])
 
         if params[:password].split("").count < 5
                     
-            flash[:password_short] = "Password is too short. Re-enter your password."
+            flash[:password_short] = "Password not valid. Re-enter your password."
 
             redirect to '/login'
         else
             if gamer && gamer.authenticate(params[:password])
                 session[:gamer_id] = gamer.id
 
-                @gamer = gamer
+                #@gamer = gamer
 
                 redirect to '/video_games'
             else
@@ -72,7 +72,7 @@ class GamerController < ApplicationController
 
                     redirect to '/login'
                 else
-                    flash[:no_account] = "No account associated with username and email combination. Please create an account."
+                    flash[:no_account] = "No account associated with username. Please create an account."
 
                     redirect to '/signup'
                 end

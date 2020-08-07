@@ -7,6 +7,12 @@ class VideoGameController < ApplicationController
         erb :'video_games/index'
     end
 
+    get '/video_games/show_all' do
+        @video_games = VideoGame.all
+
+        erb :'video_games/show_all'
+    end
+
     get '/video_games/new' do
         if_not_logged_in_redirect_to_login
 
@@ -47,7 +53,11 @@ class VideoGameController < ApplicationController
     get '/video_games/:id' do
         if_not_logged_in_redirect_to_login
 
-        @video_game = VideoGame.find_by_id(params[:id])
+        
+        does_it_exist?(params[:id])
+        
+
+        #redirect_if_not_game_owner(@video_game.gamer.id)
 
         erb :'video_games/show'
     end
@@ -57,6 +67,8 @@ class VideoGameController < ApplicationController
 
         @video_game = VideoGame.find_by_id(params[:id])
 
+        redirect_if_not_game_owner(@video_game.gamer.id)
+
         erb :'video_games/edit'
     end
 
@@ -65,9 +77,11 @@ class VideoGameController < ApplicationController
 
         video_game = VideoGame.find_by_id(params[:id])
 
-        params.delete(:_method)
+        redirect_if_not_game_owner(video_game.gamer.id)
+            
+        #params.delete(:_method)
 
-        video_game.update(params)
+        video_game.update(params[:video_game])
 
         redirect to '/video_games'
     end
@@ -75,8 +89,25 @@ class VideoGameController < ApplicationController
     delete '/video_games/:id' do
         if_not_logged_in_redirect_to_login
 
+        video_game = VideoGame.find_by_id(params[:id])
+
+        redirect_if_not_game_owner(video_game.gamer.id)
+
         VideoGame.delete(params[:id])
         
         redirect to '/video_games'
     end
+
+    private
+
+    def does_it_exist?(id)
+        @video_game = VideoGame.find_by_id(id)
+
+        if @video_game == nil
+            flash[:dont_exit] = "Don't exist"
+
+            redirect to '/video_games'
+        end
+    end
 end
+

@@ -1,7 +1,6 @@
 require './config/environment'
 
 class ApplicationController < Sinatra::Base
-
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
@@ -32,6 +31,14 @@ class ApplicationController < Sinatra::Base
     def if_not_logged_in_redirect_to_login
       if !is_logged_in?
         redirect to '/login'
+      end
+    end
+
+    def redirect_if_not_game_owner(id)
+      if current_gamer.id != id
+        flash[:cannot_edit_other_gamers_game] = "Error! ERROR!!!."
+
+        redirect to '/video_games'
       end
     end
   end

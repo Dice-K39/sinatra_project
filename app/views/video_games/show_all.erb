@@ -1,0 +1,16 @@
+<h2>All the Video Games created by Gamers</h2>
+<p>
+    <a href='/' class="button">Back to Homepage</a>
+</p>
+<table width=100% style='text-align: left'>
+    <tr>
+        <th>Games</th>
+        <th>Game Created By</th>
+    </tr>
+    <% @video_games.each do |game| %>
+    <tr>
+        <td><%= game.title %></td>
+        <td><%= game.gamer.username%></td>
+    <% end %>
+    </tr>
+</table>

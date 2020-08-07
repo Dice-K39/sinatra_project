@@ -16,5 +16,7 @@
         </tr>
     </table>
     <br><br>
-    <a href='/video_games/<%= @video_game.id %>/edit' class="button">Edit Listing</a>
+    <% if current_gamer.id == @video_game.gamer.id %>
+        <a href='/video_games/<%= @video_game.id %>/edit' class="button">Edit Listing</a>
+    <% end %>
 </p>
